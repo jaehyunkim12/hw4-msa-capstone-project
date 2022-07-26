@@ -10,7 +10,7 @@ import msa.infra.AbstractEvent;
 public class RoomRegistered extends AbstractEvent {
 
     private Long roomId;
-    private Boolean stauts;
+    private Boolean status;
     private Integer reivewCnt;
     private String description;
 
