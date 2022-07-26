@@ -12,7 +12,7 @@ public class RoomRegistered extends AbstractEvent {
     private Long roomId;
     private Boolean stauts;
     private Integer reivewCnt;
-    private String descrition;
+    private String description;
 
     public RoomRegistered(Room aggregate) {
         super(aggregate);
