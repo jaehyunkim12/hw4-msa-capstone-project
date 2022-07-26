@@ -11,8 +11,8 @@ public class RoomDeleted extends AbstractEvent {
 
     private Long roomId;
     private Boolean status;
-    private Integer reivewCnt;
-    private String descrition;
+    private Integer reviewCnt;
+    private String description;
 
     public RoomDeleted(Room aggregate) {
         super(aggregate);

@@ -11,8 +11,8 @@ public class RoomModified extends AbstractEvent {
 
     private Long roomId;
     private Boolean status;
-    private Integer reivewCnt;
-    private String descrition;
+    private Integer reviewCnt;
+    private String description;
 
     public RoomModified(Room aggregate) {
         super(aggregate);
