@@ -1,13 +1,15 @@
 # 구현:
 
-분석/설계 단계에서 도출된 헥사고날 아키텍처에 따라, 각 BC별로 대변되는 마이크로 서비스들을 스프링부트로 구현하였다. 구현한 각 서비스를 로컬에서 실행하는 방법은 아래와 같다 (각자의 포트넘버는 8081 ~ 808n 이다)
+분석/설계 단계에서 도출된 헥사고날 아키텍처에 따라, 각 BC별로 대변되는 마이크로 서비스들을 스프링부트로 구현
+
+구현한 각 서비스를 로컬에서 실행하는 방법은 아래와 같다 (각자의 포트넘버는 8081 ~ 808n 이다)
 
 ```
    mvn spring-boot:run
 ```
 
 ## SAGA Pattern
-쓰기에 있어 Pub-Sub의 Saga 패턴이 사용되었다.
+쓰기에 있어 Pub-Sub의 Saga 패턴이 사용
 
 방 등록 -> 예약 요청(고객) -> 예약 승인(집주인) -> 결제 진행 -> 예약 확인 -> 방 예약 완료
 
@@ -16,9 +18,9 @@
 
 ## CQRS Pattern
 
-집주인 및 고객이 현황을 조회 할 수 있도록 viewPage를 CQRS 로 구현하였다.
-- room, reservation, payment 개별 Aggregate 데이터 조회가 가능하다.
-- 비동기식으로 처리되어 발행된 이벤트 기반 Kafka 를 통해 수신/처리 되어 별도 Table 에 관리한다
+집주인 및 고객이 현황을 조회 할 수 있도록 viewPage를 CQRS 로 구현
+- room, reservation, payment 개별 Aggregate 데이터 조회가 가능
+- 비동기식으로 처리되어 발행된 이벤트 기반 Kafka 를 통해 수신/처리 되어 별도 Table 에 관리
 - Table 모델링 (ROOMVIEW)
 
 - viewpage MSA ViewHandler 를 통해 구현 ("RoomRegistered" 이벤트 발생 시, Pub/Sub 기반으로 별도 Roomview 테이블에 저장)
@@ -72,11 +74,10 @@
 # Correlation/Compensation(Unique Key)
 
 PolicyHandler에서 처리 시 어떤 건에 대한 처리인지를 구별하기 위한 Correlation-key 구현을 
-이벤트 클래스 안의 변수로 전달받아 서비스간 연관된 처리를 정확하게 구현하고 있습니다. 
+이벤트 클래스 안의 변수로 전달받아 서비스간 연관된 처리를 구현
 
 예약(Reservation)을 하면 동시에 연관된 방(Room), 결제(Payment) 등의 서비스의 상태가 적당하게 변경이 되고,
-예약건의 취소를 수행하면 다시 연관된 방(Room), 결제(Payment) 등의 서비스의 상태값 등의 데이터가 적당한 상태로 변경되는 것을
-확인할 수 있습니다.
+예약건의 취소를 수행하면 다시 연관된 방(Room), 결제(Payment) 등의 서비스의 상태값 등의 데이터가 적당한 상태로 변경
 
 
 예약 전 - 방 상태(status = true)
@@ -107,7 +108,7 @@ PolicyHandler에서 처리 시 어떤 건에 대한 처리인지를 구별하기
 
 ## Request/Response(Feign Client / Sync.Async)
 
-ReservationAccepted 시 approvePayment 호출은 Req/Res 방식을 이용하였고, FeignClient 를 이용하여 처리하였다.
+ReservationAccepted 시 approvePayment 호출은 Req/Res 방식을 이용하였고, FeignClient 를 이용하여 처리
 
 ```
 # PaymentService.java
